@@ -1,0 +1,20 @@
+^C:\USERS\IANBA\DOCUMENTS\VOXELCPP\BUILD\CMAKEFILES\526AAAC85ABB906B9406E6B7FD91C210\GLAD.C.RULE
+setlocal
+"C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.1520.0_x64__qbz5n2kfra8p0\python3.8.exe" -m glad --quiet --profile=core --out-path=C:/Users/ianba/Documents/Voxelcpp/build/glad --api=gl=4.0,gles2=3.0 --spec=gl  --reproducible --generator=c-debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\IANBA\DOCUMENTS\VOXELCPP\CMAKELISTS.TXT
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/ianba/Documents/Voxelcpp -BC:/Users/ianba/Documents/Voxelcpp/build --check-stamp-file C:/Users/ianba/Documents/Voxelcpp/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
