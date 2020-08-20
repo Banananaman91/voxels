@@ -1,6 +1,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 namespace renderer{
     class RenderTriangle{
@@ -22,21 +25,13 @@ namespace renderer{
             unsigned int vertexShader;
             unsigned int fragmentShader;
             unsigned int shaderProgram;
-
-            const char *vertexShaderSource = "#version 330 core\n"
-                "layout (location = 0) in vec3 aPos;\n"
-                "void main ()\n"
-                "{\n"
-                    "gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n"
-                "}\0";
-
-            const char *fragmentShaderSource = "#version 330 core\n"
-                "out vec4 FragColour;\n"
-                "void main()\n"
-                "{\n"
-                    "FragColour = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                "}\0";
+            const char *vertexShaderSource;
+            const char *fragmentShaderSource;
+            const char *vertPath = "vertexShader.glsl";
+            const char *fragPath = "FragmentShader.glsl";
 
             void CreateTriangle();
+
+            std::string ReadFile(const char* filePath);
     };
 }

@@ -1,2 +1,4 @@
 C:\Users\ianba\Documents\Voxelcpp\build\Debug\glad.pdb
 C:\Users\ianba\Documents\Voxelcpp\build\glad.dir\Debug\glad.pdb
+C:\Users\ianba\Documents\voxels\Voxelcpp\build\Debug\glad.pdb
+C:\Users\ianba\Documents\voxels\Voxelcpp\build\glad.dir\Debug\glad.pdb

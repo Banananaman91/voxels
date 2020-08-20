@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\ianba\Documents\Voxelcpp\build\glad\src\glad.c">
+    <ClCompile Include="C:\Users\ianba\Documents\voxels\Voxelcpp\build\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\ianba\Documents\Voxelcpp\build\glad\include\glad\glad.h">
+    <ClInclude Include="C:\Users\ianba\Documents\voxels\Voxelcpp\build\glad\include\glad\glad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\ianba\Documents\Voxelcpp\build\CMakeFiles\526aaac85abb906b9406e6b7fd91c210\glad.c.rule">
+    <CustomBuild Include="C:\Users\ianba\Documents\voxels\Voxelcpp\build\CMakeFiles\3cddd877c2e64c777704e3f291d32763\glad.c.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\ianba\Documents\Voxelcpp\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\ianba\Documents\voxels\Voxelcpp\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{7F019BDF-D0A0-3735-A804-22AB167FBCA7}</UniqueIdentifier>
+      <UniqueIdentifier>{669557E5-DBB5-35D8-A7A9-C4115754DA55}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{0538E672-49D3-39FF-976F-889C86576446}</UniqueIdentifier>
+      <UniqueIdentifier>{647A50A9-5B29-3754-AC61-1DD1DD1180EB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{560F5A47-E0BA-3CD8-B742-0DFF44F7267C}</UniqueIdentifier>
+      <UniqueIdentifier>{D74B1F2F-8F29-3D3C-B01A-92F34511D56A}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

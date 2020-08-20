@@ -5,8 +5,8 @@
 namespace renderer {
     class WindowRender{
         public:
-            int _width = 800;
-            int _height = 600;
+            const int _width = 800;
+            const int _height = 600;
             
             void processInput(GLFWwindow* window);
             void Display();
