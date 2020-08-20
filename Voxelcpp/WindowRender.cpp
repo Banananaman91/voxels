@@ -36,17 +36,29 @@ void WindowRender::Display(){
     while(!glfwWindowShouldClose(window.get())){
         //Check for input
         processInput(window.get());
+
         //Rendering commands
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-            //draw object
+
+        //draw object
         glUseProgram(triangle.shaderProgram);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(triangle.VAOs[0]);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glUseProgram(triangle.shaderProgram2);
+        glBindVertexArray(triangle.VAOs[1]);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
         //swap colour buffers
         glfwSwapBuffers(window.get());
+
         //check if any events are triggered
         glfwPollEvents();
     }
+
+    glDeleteVertexArrays(2, triangle.VAOs);
+    glDeleteBuffers(2, triangle.VBOs);
+    glDeleteProgram(triangle.shaderProgram);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
