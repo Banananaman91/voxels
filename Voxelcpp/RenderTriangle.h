@@ -32,9 +32,9 @@ namespace renderer{
             unsigned int shaderProgram2;
             const char *vertexShaderSource;
             const char *fragmentShaderSource;
-            const char *vertPath = "vertexShader.glsl";
-            const char *fragPath = "FragmentShader.glsl";
-            const char *yellowPath = "YellowFragment.glsl";
+            const char *vertPath = "Shaders/VertexShader.glsl";
+            const char *fragPath = "Shaders/FragmentShader.glsl";
+            const char *yellowPath = "Shaders/YellowFragment.glsl";
 
             void CreateTriangle();
 

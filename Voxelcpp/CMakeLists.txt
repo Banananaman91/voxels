@@ -24,8 +24,17 @@ add_executable(voxelcpp
     ${project_headers}
 )
 
+add_subdirectory(Shaders)
+
 target_link_libraries(voxelcpp PUBLIC Glad::GLAD GLFW::GLFW3)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
+
+add_custom_command(
+  TARGET voxelcpp POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+    $<TARGET_FILE_DIR:Shaders>
+    $<TARGET_FILE_DIR:voxelcpp>/Shaders
+)
