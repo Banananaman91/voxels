@@ -1,7 +1,7 @@
 #include "MainHeader.h"
 #include <iostream>
 
-namespace renderer {
+namespace ProjectMain {
     class WindowRender{
         public:
             const int _width = 800;

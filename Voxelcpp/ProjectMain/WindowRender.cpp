@@ -1,5 +1,6 @@
 #include "WindowRender.h"
-#include "RenderPolygon.h"
+#include "../Renderer/RenderPolygon.h" //this is one folder up
+using namespace ProjectMain;
 using namespace renderer;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height); 

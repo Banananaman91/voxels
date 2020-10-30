@@ -1,5 +1,5 @@
-#include "Shader.h"
-#include "FileReader.h"
+#include "../Renderer/Shader.h"
+#include "../FReader/FileReader.h"
 using namespace renderer;
 using namespace freader;
 

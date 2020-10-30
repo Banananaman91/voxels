@@ -1,5 +1,5 @@
 #include "WindowRender.h"
-using namespace renderer;
+using namespace ProjectMain;
 
 void main(){
     WindowRender renderWindow;
