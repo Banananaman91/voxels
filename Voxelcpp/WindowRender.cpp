@@ -104,7 +104,7 @@ void WindowRender::processInput(GLFWwindow* window){
         transform = glm::scale(transform, glm::vec3(scale, scale, scale));
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-        scale -= 0.001f;
+        scale -= 0.01f;
         transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
     }
 }
