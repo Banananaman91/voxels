@@ -100,11 +100,13 @@ void WindowRender::processInput(GLFWwindow* window){
         transform = glm::rotate_slow(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -0.01f));
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-        scale += 0.001f;
-        transform = glm::scale(transform, glm::vec3(scale, scale, scale));
+        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.01f));
+        // scale += 0.001f;
+        // transform = glm::scale(transform, glm::vec3(scale, scale, scale));
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-        scale -= 0.01f;
-        transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
+        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, -0.01f));
+        // scale -= 0.01f;
+        // transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
     }
 }
