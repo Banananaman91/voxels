@@ -1,5 +1,5 @@
 #include "WindowRender.h"
-#include "RenderTriangle.h"
+#include "RenderPolygon.h"
 using namespace renderer;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height); 
@@ -30,8 +30,9 @@ void WindowRender::Display(){
     glViewport(0, 0, 800, 600);
     //check for viewport resizing
     glfwSetFramebufferSizeCallback(window.get(), framebuffer_size_callback);
-    RenderTriangle triangle;
-    triangle.CreateTriangle();
+    RenderPolygon polygon;
+    polygon.CreatePolygon();
+    transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
     //wait for user to close window
     while(!glfwWindowShouldClose(window.get())){
         //Check for input
@@ -41,13 +42,24 @@ void WindowRender::Display(){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        //create transformations
+        
+        //transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
         //draw object
-        glUseProgram(triangle.shaderProgram);
-        glBindVertexArray(triangle.VAOs[0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        glUseProgram(triangle.shaderProgram2);
-        glBindVertexArray(triangle.VAOs[1]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        polygon.shaderProgram.use();
+        unsigned int transformLoc = glGetUniformLocation(polygon.shaderProgram.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+        //render container
+        glBindVertexArray(polygon.VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        // glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+        // glm::mat4 trans = glm::mat4(1.0f);
+        // trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+        // vec = trans * vec;
+        // std::cout << vec.x << vec.y << vec.z << std::endl;
 
         //swap colour buffers
         glfwSwapBuffers(window.get());
@@ -56,9 +68,9 @@ void WindowRender::Display(){
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(2, triangle.VAOs);
-    glDeleteBuffers(2, triangle.VBOs);
-    glDeleteProgram(triangle.shaderProgram);
+    glDeleteVertexArrays(1, &polygon.VAO);
+    glDeleteBuffers(1, &polygon.VBO);
+    glDeleteBuffers(1, &polygon.EBO);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
@@ -68,5 +80,31 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 void WindowRender::processInput(GLFWwindow* window){
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
         glfwSetWindowShouldClose(window, true);
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+        transform = glm::translate(transform, glm::vec3(0.0f, 0.01f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+        transform = glm::translate(transform, glm::vec3(0.0f, -0.01f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+        transform = glm::translate(transform, glm::vec3(0.01f, 0.0f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+        transform = glm::translate(transform, glm::vec3(-0.01f, 0.0f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
+        transform = glm::rotate_slow(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 0.01f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+        transform = glm::rotate_slow(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -0.01f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        scale += 0.001f;
+        transform = glm::scale(transform, glm::vec3(scale, scale, scale));
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
+        scale -= 0.001f;
+        transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
     }
 }
