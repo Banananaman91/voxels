@@ -33,7 +33,10 @@ void WindowRender::Display(){
     glfwSetFramebufferSizeCallback(window.get(), framebuffer_size_callback);
     RenderPolygon polygon;
     polygon.CreatePolygon();
-    transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+    glEnable(GL_DEPTH_TEST);
     //wait for user to close window
     while(!glfwWindowShouldClose(window.get())){
         //Check for input
@@ -41,26 +44,19 @@ void WindowRender::Display(){
 
         //Rendering commands
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        //create transformations
-        
-        //transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //draw object
         polygon.shaderProgram.use();
-        unsigned int transformLoc = glGetUniformLocation(polygon.shaderProgram.ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+        //create transformations
+        polygon.shaderProgram.SetMat4("model", model);
+        polygon.shaderProgram.SetMat4("view", view);
+        polygon.shaderProgram.SetMat4("projection", projection);
 
         //render container
         glBindVertexArray(polygon.VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        // glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-        // glm::mat4 trans = glm::mat4(1.0f);
-        // trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
-        // vec = trans * vec;
-        // std::cout << vec.x << vec.y << vec.z << std::endl;
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         //swap colour buffers
         glfwSwapBuffers(window.get());
@@ -71,7 +67,6 @@ void WindowRender::Display(){
 
     glDeleteVertexArrays(1, &polygon.VAO);
     glDeleteBuffers(1, &polygon.VBO);
-    glDeleteBuffers(1, &polygon.EBO);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
@@ -83,30 +78,30 @@ void WindowRender::processInput(GLFWwindow* window){
         glfwSetWindowShouldClose(window, true);
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(0.0f, 0.01f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.01f, 0.0f));
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(0.0f, -0.01f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.0f, -0.01f, 0.0f));
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(0.01f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.01f, 0.0f, 0.0f));
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(-0.01f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(-0.01f, 0.0f, 0.0f));
     }
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-        transform = glm::rotate_slow(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 0.01f));
+        model = glm::rotate_slow(model, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 0.01f));
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
-        transform = glm::rotate_slow(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -0.01f));
+        model = glm::rotate_slow(model, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -0.01f));
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.01f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.01f));
         // scale += 0.001f;
         // transform = glm::scale(transform, glm::vec3(scale, scale, scale));
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, -0.01f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.01f));
         // scale -= 0.01f;
         // transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
     }
