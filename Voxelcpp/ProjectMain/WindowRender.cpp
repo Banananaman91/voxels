@@ -56,7 +56,7 @@ void WindowRender::Display(){
 
         //render container
         glBindVertexArray(polygon.VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
 
         //swap colour buffers
         glfwSwapBuffers(window.get());

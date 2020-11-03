@@ -6,50 +6,6 @@
 namespace renderer{
     class RenderPolygon{
         public:
-            float vertices[108] = {
-                -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                0.5f,  0.5f, -0.5f,
-                0.5f,  0.5f, -0.5f,
-                -0.5f,  0.5f, -0.5f,
-                -0.5f, -0.5f, -0.5f,
-
-                -0.5f, -0.5f,  0.5f, 
-                0.5f, -0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
-                -0.5f,  0.5f,  0.5f,
-                -0.5f, -0.5f,  0.5f,
-
-                -0.5f,  0.5f,  0.5f,
-                -0.5f,  0.5f, -0.5f,
-                -0.5f, -0.5f, -0.5f,
-                -0.5f, -0.5f, -0.5f,
-                -0.5f, -0.5f,  0.5f,
-                -0.5f,  0.5f,  0.5f,
-
-                0.5f,  0.5f,  0.5f,
-                0.5f,  0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
-
-                -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f,  0.5f,
-                0.5f, -0.5f,  0.5f,
-                -0.5f, -0.5f,  0.5f,
-                -0.5f, -0.5f, -0.5f,
-
-                -0.5f,  0.5f, -0.5f,
-                0.5f,  0.5f, -0.5f,
-                0.5f,  0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
-                -0.5f,  0.5f,  0.5f,
-                -0.5f,  0.5f, -0.5f,
-            };
-
             const glm::vec3 cubeVertices [8] {
                 glm::vec3(0, 0, 0), //0
                 glm::vec3(1, 0, 0), //1
@@ -84,6 +40,7 @@ namespace renderer{
 
             unsigned int VBO;
             unsigned int VAO;
+            unsigned int EBO;
             unsigned int vertexShader;
             unsigned int fragmentShader;
             const char *vertexShaderSource;
