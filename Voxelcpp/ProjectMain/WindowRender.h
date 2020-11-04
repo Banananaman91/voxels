@@ -1,6 +1,7 @@
-#include "MainHeader.h"
+#include "../Renderer/RenderCube.h"
 #include "Camera.h"
 #include <iostream>
+using namespace renderer;
 
 namespace ProjectMain {
     class WindowRender{
@@ -17,7 +18,20 @@ namespace ProjectMain {
             float deltaTime = 0.0f;
             float lastFrame = 0.0f;
             float currentFrame = 0.0f;
-            
+
+            //shader program
+            unsigned int vertexShader;
+            unsigned int fragmentShader;
+            const char *vertexShaderSource;
+            const char *fragmentShaderSource;
+            const char *vertPath = "Shaders/VertexShader.glsl";
+            const char *fragPath = "Shaders/FragmentShader.glsl";
+            const char *lightPath = "Shaders/LightFragment.glsl";
+
+            Shader shaderProgram = Shader(vertPath, fragPath);
+            Shader shaderProgram2 = Shader(vertPath, lightPath);
+
+            //methods
             void processInput(GLFWwindow* window);
             void Display();
     };

@@ -1,12 +1,9 @@
 #include "WindowRender.h"
-#include "../Renderer/RenderCube.h" //this is one folder up
 using namespace ProjectMain;
-using namespace renderer;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xOffset, double yOffset);
-
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = 800.0f / 2.0f;
@@ -97,25 +94,20 @@ void WindowRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //draw object
-        polygon.shaderProgram.use();
+        shaderProgram.use();
 
         //create transformations
         view = camera.GetViewMatrix();
-        //polygon.shaderProgram.SetMat4("model", model);
-        polygon.shaderProgram.SetMat4("view", view);
-        polygon.shaderProgram.SetMat4("projection", projection);
+        shaderProgram.SetMat4("view", view);
+        shaderProgram.SetMat4("projection", projection);
 
         //render container
         glBindVertexArray(polygon.VAO);
         for (unsigned int i = 0; i <= 10; i++)
         {
-            // glm::mat4 origin = glm::mat4(1.0f);
-            // origin = glm::translate(origin, cubePositions[i]);
-            polygon.shaderProgram.SetMat4("model", cubeMatrices[i]);
+            shaderProgram.SetMat4("model", cubeMatrices[i]);
             glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
         }
-        
-        //glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
 
         //swap colour buffers
         glfwSwapBuffers(window.get());

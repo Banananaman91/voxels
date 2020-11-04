@@ -1,7 +1,4 @@
 #include "../ProjectMain/MainHeader.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 namespace renderer{
     class Shader{
