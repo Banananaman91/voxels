@@ -1,7 +1,7 @@
 #include "FileReader.h" //this source file is right next to this header - so this should just be the file name
 using namespace freader;
 
-std::string FileReader::ReadFile(const char* filePath){
+std::string FileReader::ReadFile(std::string filePath){
     std::stringstream content;
     std::ifstream fileStream(filePath, std::ios::in);
 

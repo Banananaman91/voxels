@@ -3,7 +3,7 @@
 using namespace renderer;
 using namespace freader;
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath){
+Shader::Shader(std::string vertexPath, std::string fragmentPath){
     //create vertex shader
     FileReader reader;
     std::string vertexShdrStr = reader.ReadFile(vertexPath);

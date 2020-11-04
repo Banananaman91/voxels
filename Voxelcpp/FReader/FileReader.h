@@ -6,6 +6,6 @@
 namespace freader {
     class FileReader{
         public:
-            std::string ReadFile(const char* filePath);
+            std::string ReadFile(std::string filePath);
     };
 }

@@ -11,10 +11,10 @@ float lastY = 600.0f / 2.0f;
 bool firstMouse = true;
 
 void WindowRender::Display(){
-    //initialise glfw with OpenGL version 3 and core profile
+    //initialise glfw with OpenGL version 4 and core profile
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window = std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)>(glfwCreateWindow(_width, _height, "Voxel", nullptr, nullptr), glfwDestroyWindow);
@@ -41,6 +41,7 @@ void WindowRender::Display(){
     glfwSetCursorPosCallback(window.get(), mouse_callback);
     glfwSetScrollCallback(window.get(), scroll_callback);
 
+    InitialiseShaders();
     RenderCube polygon;
     polygon.CreateCube();
     //origin = glm::translate(origin, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -94,18 +95,18 @@ void WindowRender::Display(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //draw object
-        shaderProgram.use();
+        shaderProgram->use();
 
         //create transformations
         view = camera.GetViewMatrix();
-        shaderProgram.SetMat4("view", view);
-        shaderProgram.SetMat4("projection", projection);
+        shaderProgram->SetMat4("view", view);
+        shaderProgram->SetMat4("projection", projection);
 
         //render container
         glBindVertexArray(polygon.VAO);
         for (unsigned int i = 0; i <= 10; i++)
         {
-            shaderProgram.SetMat4("model", cubeMatrices[i]);
+            shaderProgram->SetMat4("model", cubeMatrices[i]);
             glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
         }
 
@@ -119,6 +120,11 @@ void WindowRender::Display(){
     glDeleteVertexArrays(1, &polygon.VAO);
     glDeleteBuffers(1, &polygon.VBO);
     glDeleteBuffers(1, &polygon.EBO);
+}
+
+void WindowRender::InitialiseShaders(){
+    shaderProgram = std::make_shared<Shader>(vertPath, fragPath);
+    lightProgram = std::make_shared<Shader>(vertPath, lightPath);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){

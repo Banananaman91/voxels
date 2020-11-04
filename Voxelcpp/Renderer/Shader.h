@@ -5,7 +5,7 @@ namespace renderer{
         public:
             unsigned int ID;
             //Constructor to generate the shader
-            Shader(const char* vertexPath, const char* fragmentPath);
+            Shader(std::string vertexPath, std::string fragmentPath);
             //Activate the shader
             void use() const;
             //utility uniform functions

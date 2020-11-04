@@ -20,19 +20,16 @@ namespace ProjectMain {
             float currentFrame = 0.0f;
 
             //shader program
-            unsigned int vertexShader;
-            unsigned int fragmentShader;
-            const char *vertexShaderSource;
-            const char *fragmentShaderSource;
-            const char *vertPath = "Shaders/VertexShader.glsl";
-            const char *fragPath = "Shaders/FragmentShader.glsl";
-            const char *lightPath = "Shaders/LightFragment.glsl";
+            std::string vertPath = "../Shaders/VertexShader.glsl";
+            std::string fragPath = "../Shaders/FragmentShader.glsl";
+            std::string lightPath = "../Shaders/LightFragment.glsl";
 
-            Shader shaderProgram = Shader(vertPath, fragPath);
-            Shader shaderProgram2 = Shader(vertPath, lightPath);
+            std::shared_ptr<Shader> shaderProgram;
+            std::shared_ptr<Shader> lightProgram;
 
             //methods
             void processInput(GLFWwindow* window);
             void Display();
+            void InitialiseShaders();
     };
 }
