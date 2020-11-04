@@ -1,5 +1,5 @@
 #include "WindowRender.h"
-#include "../Renderer/RenderPolygon.h" //this is one folder up
+#include "../Renderer/RenderCube.h" //this is one folder up
 using namespace ProjectMain;
 using namespace renderer;
 
@@ -44,9 +44,9 @@ void WindowRender::Display(){
     glfwSetCursorPosCallback(window.get(), mouse_callback);
     glfwSetScrollCallback(window.get(), scroll_callback);
 
-    RenderPolygon polygon;
-    polygon.CreatePolygon();
-    origin = glm::translate(origin, glm::vec3(0.0f, 0.0f, 0.0f));
+    RenderCube polygon;
+    polygon.CreateCube();
+    //origin = glm::translate(origin, glm::vec3(0.0f, 0.0f, 0.0f));
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     view = camera.GetViewMatrix();
     projection = glm::perspective(glm::radians(45.0f), _width / _height, 0.1f, 100.0f);
@@ -64,6 +64,24 @@ void WindowRender::Display(){
     glm::vec3( 1.5f,  0.2f, -1.5f), 
     glm::vec3(-1.3f,  1.0f, -1.5f)  
     };
+
+    glm::mat4 cubeMatrices[] = {
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+        glm::mat4(1.0f),
+    };
+
+    for (unsigned int i = 0; i <= 10; i++)
+    {
+        cubeMatrices[i] = glm::translate(cubeMatrices[i], cubePositions[i]);
+    }
 
     //wait for user to close window
     while(!glfwWindowShouldClose(window.get())){
@@ -89,10 +107,11 @@ void WindowRender::Display(){
 
         //render container
         glBindVertexArray(polygon.VAO);
-        for (unsigned int i = 0; i < sizeof(cubePositions); i++)
+        for (unsigned int i = 0; i <= 10; i++)
         {
-            model = glm::translate(origin, cubePositions[i]);
-            polygon.shaderProgram.SetMat4("model", model);
+            // glm::mat4 origin = glm::mat4(1.0f);
+            // origin = glm::translate(origin, cubePositions[i]);
+            polygon.shaderProgram.SetMat4("model", cubeMatrices[i]);
             glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
         }
         
@@ -107,6 +126,7 @@ void WindowRender::Display(){
 
     glDeleteVertexArrays(1, &polygon.VAO);
     glDeleteBuffers(1, &polygon.VBO);
+    glDeleteBuffers(1, &polygon.EBO);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){

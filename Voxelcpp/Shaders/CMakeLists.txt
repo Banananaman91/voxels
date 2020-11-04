@@ -1,6 +1,6 @@
 set(SHADER_FILES
   FragmentShader.glsl
-  YellowFragment.glsl
+  LightFragment.glsl
   VertexShader.glsl
 )
 

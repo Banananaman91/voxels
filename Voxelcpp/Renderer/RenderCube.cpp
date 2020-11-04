@@ -1,7 +1,7 @@
-#include "RenderPolygon.h"
+#include "RenderCube.h"
 using namespace renderer;
 
-void RenderPolygon::CreatePolygon(){
+void RenderCube::CreateCube(){
     //Bind vertex array buffer
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

@@ -4,7 +4,7 @@
 #include <sstream>
 
 namespace renderer{
-    class RenderPolygon{
+    class RenderCube{
         public:
             const glm::vec3 cubeVertices [8] {
                 glm::vec3(0, 0, 0), //0
@@ -52,6 +52,6 @@ namespace renderer{
             Shader shaderProgram = Shader(vertPath, fragPath);
             Shader shaderProgram2 = Shader(vertPath, yellowPath);
 
-            void CreatePolygon();
+            void CreateCube();
     };
 }
