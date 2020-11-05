@@ -50,36 +50,13 @@ void WindowRender::Display(){
     projection = glm::perspective(glm::radians(45.0f), _width / _height, 0.1f, 100.0f);
     glEnable(GL_DEPTH_TEST);
 
-    glm::vec3 cubePositions[] = {
-    glm::vec3( 0.0f,  0.0f,  0.0f), 
-    glm::vec3( 2.0f,  5.0f, -15.0f), 
-    glm::vec3(-1.5f, -2.2f, -2.5f),  
-    glm::vec3(-3.8f, -2.0f, -12.3f),  
-    glm::vec3( 2.4f, -0.4f, -3.5f),  
-    glm::vec3(-1.7f,  3.0f, -7.5f),  
-    glm::vec3( 1.3f, -2.0f, -2.5f),  
-    glm::vec3( 1.5f,  2.0f, -2.5f), 
-    glm::vec3( 1.5f,  0.2f, -1.5f), 
-    glm::vec3(-1.3f,  1.0f, -1.5f)  
-    };
-
-    glm::mat4 cubeMatrices[] = {
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-        glm::mat4(1.0f),
-    };
-
     for (unsigned int i = 0; i <= 10; i++)
     {
         cubeMatrices[i] = glm::translate(cubeMatrices[i], cubePositions[i]);
     }
+
+    lightModel = glm::translate(lightModel, lightPos);
+    lightModel = glm::scale(lightModel, glm::vec3(0.2f));
 
     //wait for user to close window
     while(!glfwWindowShouldClose(window.get())){
@@ -106,9 +83,20 @@ void WindowRender::Display(){
         glBindVertexArray(polygon.VAO);
         for (unsigned int i = 0; i <= 10; i++)
         {
+            shaderProgram->SetVec3("lightPos", lightPos);
+            shaderProgram->SetVec3("objectColour", boxColour);
+            shaderProgram->SetVec3("lightColour", lightColour);
+            shaderProgram->SetFloat("ambientStrength", 0.1f);
             shaderProgram->SetMat4("model", cubeMatrices[i]);
             glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
         }
+
+        lightProgram->use();
+        lightProgram->SetVec3("lightColour", lightColour);
+        lightProgram->SetMat4("view", view);
+        lightProgram->SetMat4("projection", projection);
+        lightProgram->SetMat4("model", lightModel);
+        glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
 
         //swap colour buffers
         glfwSwapBuffers(window.get());
@@ -120,6 +108,7 @@ void WindowRender::Display(){
     glDeleteVertexArrays(1, &polygon.VAO);
     glDeleteBuffers(1, &polygon.VBO);
     glDeleteBuffers(1, &polygon.EBO);
+    glDeleteBuffers(1, &polygon.NBO);
 }
 
 void WindowRender::InitialiseShaders(){

@@ -14,6 +14,15 @@ namespace renderer{
                 glm::vec3(0, 0, 1) //7
             };
 
+            const glm::vec3 cubeNormals [6] {
+                glm::vec3(0.0f, 0.0f, -1.0f),
+                glm::vec3(0.0f, 0.0f, 1.0f),
+                glm::vec3(-1.0f, 0.0f, 0.0f),
+                glm::vec3(1.0f, 0.0f, 0.0f),
+                glm::vec3(0.0f, -1.0f, 0.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            };
+
             unsigned int indices[36]{
                 // Front
                 0, 2, 1,
@@ -38,6 +47,7 @@ namespace renderer{
             unsigned int VBO;
             unsigned int VAO;
             unsigned int EBO;
+            unsigned int NBO;
 
             void CreateCube();
     };
