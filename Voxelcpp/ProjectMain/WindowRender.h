@@ -1,6 +1,8 @@
 #include "../Renderer/RenderCube.h"
 #include "Camera.h"
 #include <iostream>
+#include <array>
+
 using namespace renderer;
 
 namespace ProjectMain {
@@ -15,9 +17,9 @@ namespace ProjectMain {
             glm::mat4 lightModel = glm::mat4(1.0f);
             float scale = 1.0f;
 
-            glm::vec3 lightPos = glm::vec3(1.0f);
+            glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
 
-            glm::vec3 cubePositions[10] = {
+            std::array<glm::vec3, 10> cubePositions = {
                 glm::vec3( 0.0f,  0.0f,  0.0f), 
                 glm::vec3( 2.0f,  5.0f, -15.0f), 
                 glm::vec3(-1.5f, -2.2f, -2.5f),  
@@ -30,7 +32,7 @@ namespace ProjectMain {
                 glm::vec3(-1.3f,  1.0f, -1.5f)  
             };
 
-            glm::mat4 cubeMatrices[10] = {
+            std::array<glm::mat4, 10> cubeMatrices = {
                 glm::mat4(1.0f),
                 glm::mat4(1.0f),
                 glm::mat4(1.0f),

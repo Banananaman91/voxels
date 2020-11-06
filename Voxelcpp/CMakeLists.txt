@@ -17,7 +17,7 @@ find_package(glad 0.1.30 REQUIRED
 find_package(GLFW 3.2.1 REQUIRED)
 
 set(project_sources ProjectMain/main.cpp ProjectMain/WindowRender.cpp FReader/FileReader.cpp Renderer/RenderCube.cpp Renderer/Shader.cpp ProjectMain/Camera.cpp)
-set(project_headers ProjectMain/MainHeader.h ProjectMain/WindowRender.h FReader/FileReader.h Renderer/RenderCube.h Renderer/Shader.h ProjectMain/Camera.h)
+set(project_headers ProjectMain/MainHeader.h ProjectMain/WindowRender.h FReader/FileReader.h Renderer/RenderCube.h Renderer/Shader.h ProjectMain/Camera.h Renderer/Vertex.h)
 
 add_executable(voxelcpp 
     ${project_sources}

@@ -44,13 +44,12 @@ void WindowRender::Display(){
     InitialiseShaders();
     RenderCube polygon;
     polygon.CreateCube();
-    //origin = glm::translate(origin, glm::vec3(0.0f, 0.0f, 0.0f));
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     view = camera.GetViewMatrix();
     projection = glm::perspective(glm::radians(45.0f), _width / _height, 0.1f, 100.0f);
     glEnable(GL_DEPTH_TEST);
 
-    for (unsigned int i = 0; i <= 10; i++)
+    for (unsigned int i = 0; i < 10; i++)
     {
         cubeMatrices[i] = glm::translate(cubeMatrices[i], cubePositions[i]);
     }
@@ -81,14 +80,16 @@ void WindowRender::Display(){
 
         //render container
         glBindVertexArray(polygon.VAO);
-        for (unsigned int i = 0; i <= 10; i++)
+        for (unsigned int i = 0; i < 10; i++)
         {
             shaderProgram->SetVec3("lightPos", lightPos);
+            shaderProgram->SetMat4("lightMat", lightModel);
             shaderProgram->SetVec3("objectColour", boxColour);
             shaderProgram->SetVec3("lightColour", lightColour);
             shaderProgram->SetFloat("ambientStrength", 0.1f);
             shaderProgram->SetMat4("model", cubeMatrices[i]);
             glDrawElements(GL_TRIANGLES, sizeof(polygon.indices), GL_UNSIGNED_INT, 0);
+
         }
 
         lightProgram->use();
@@ -142,15 +143,29 @@ void WindowRender::processInput(GLFWwindow* window){
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
         view = glm::rotate_slow(view, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -0.01f));
     }
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, 0.01f));
-        // scale += 0.001f;
-        // transform = glm::scale(transform, glm::vec3(scale, scale, scale));
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        lightPos += glm::vec3(0.0f, 0.01f, 0.0f);
+        lightModel = glm::translate(lightModel, glm::vec3(0.0f, 0.01f, 0.0f));
     }
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -0.01f));
-        // scale -= 0.01f;
-        // transform = glm::scale_slow(transform, glm::vec3(scale, scale, scale));
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+        lightPos += glm::vec3(0.0f, -0.01f, 0.0f);
+        lightModel = glm::translate(lightModel, glm::vec3(0.0f, -0.01f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+        lightPos += glm::vec3(-0.01f, 0.0f, 0.0f);
+        lightModel = glm::translate(lightModel, glm::vec3(-0.01f, 0.0f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        lightPos += glm::vec3(0.01f, 0.0f, 0.0f);
+        lightModel = glm::translate(lightModel, glm::vec3(0.01f, 0.0f, 0.0f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS){
+        lightPos += glm::vec3(0.0f, 0.0f, 0.01f);
+        lightModel = glm::translate(lightModel, glm::vec3(0.0f, 0.0f, 0.01f));
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS){
+        lightPos += glm::vec3(0.0f, 0.0f, -0.01f);
+        lightModel = glm::translate(lightModel, glm::vec3(0.0f, 0.0f, -0.01f));
     }
 }
 
